@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { Formik } from 'formik';
 import {
   StyledForm,
@@ -24,37 +23,35 @@ const validationSchema = Yup.object().shape({
     .required('Required!'),
 });
 
-export class ContactForm extends Component {
-  handleSubmit = (values, { resetForm }) => {
-    this.props.onSubmit(values);
+export function ContactForm({ onSubmit }) {
+  const handleSubmit = (values, { resetForm }) => {
+    onSubmit(values);
     resetForm();
   };
 
-  render() {
-    return (
-      <Formik
-        initialValues={{ name: '', number: '' }}
-        validationSchema={validationSchema}
-        onSubmit={this.handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <StyledForm>
-            <StyledLabel>
-              Name
-              <StyledField type="text" id="name" name="name" required />
-              <ErrorMsg name="name" component="div" className="error" />
-            </StyledLabel>
-            <StyledLabel>
-              Number
-              <StyledField type="tel" id="number" name="number" required />
-              <ErrorMsg name="number" component="div" className="error" />
-            </StyledLabel>
-            <SubmitBtn type="submit" disabled={isSubmitting}>
-              Add contact
-            </SubmitBtn>
-          </StyledForm>
-        )}
-      </Formik>
-    );
-  }
+  return (
+    <Formik
+      initialValues={{ name: '', number: '' }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting }) => (
+        <StyledForm>
+          <StyledLabel>
+            Name
+            <StyledField type="text" id="name" name="name" required />
+            <ErrorMsg name="name" component="div" className="error" />
+          </StyledLabel>
+          <StyledLabel>
+            Number
+            <StyledField type="tel" id="number" name="number" required />
+            <ErrorMsg name="number" component="div" className="error" />
+          </StyledLabel>
+          <SubmitBtn type="submit" disabled={isSubmitting}>
+            Add contact
+          </SubmitBtn>
+        </StyledForm>
+      )}
+    </Formik>
+  );
 }
